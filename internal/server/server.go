@@ -10,7 +10,7 @@ import (
 
 type Server struct {
 	logger     *log.Logger
-	httpServer *http.Server
+	HttpServer *http.Server
 }
 
 func New(logger *log.Logger) *Server {
@@ -29,11 +29,6 @@ func New(logger *log.Logger) *Server {
 
 	return &Server{
 		logger:     logger,
-		httpServer: httpServer,
+		HttpServer: httpServer,
 	}
-}
-
-func (s *Server) Start() error {
-	s.logger.Printf("Запуск сервера на порту %s", s.httpServer.Addr)
-	return s.httpServer.ListenAndServe()
 }
