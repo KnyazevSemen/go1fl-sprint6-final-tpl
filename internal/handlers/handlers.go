@@ -16,7 +16,13 @@ var tmpl *template.Template
 
 func init() {
 	var err error
-	tmpl, err = template.ParseFiles("static/index.html")
+	currentDir, err := os.Getwd()
+	if err != nil {
+		log.Fatal("не удалось получить текущую директорию:", err)
+	}
+	parentDir := filepath.Dir(currentDir)
+	templatePath := filepath.Join(parentDir, "index.html")
+	tmpl, err = template.ParseFiles(templatePath)
 	if err != nil {
 		log.Fatal("ошибка загрузки формы:", err)
 	}
@@ -49,7 +55,7 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	file, header, err := r.FormFile("file")
+	file, header, err := r.FormFile("myFile")
 	if err != nil {
 		http.Error(w, "ошибка получения файла: "+err.Error(), http.StatusInternalServerError)
 		return
@@ -76,7 +82,7 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type", "text/plain")
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 	w.Write([]byte(convertedText))
 }
 
