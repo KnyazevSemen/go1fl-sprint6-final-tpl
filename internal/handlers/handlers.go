@@ -20,8 +20,7 @@ func init() {
 	if err != nil {
 		log.Fatal("не удалось получить текущую директорию:", err)
 	}
-	parentDir := filepath.Dir(currentDir)
-	templatePath := filepath.Join(parentDir, "index.html")
+	templatePath := filepath.Join(currentDir, "index.html")
 	tmpl, err = template.ParseFiles(templatePath)
 	if err != nil {
 		log.Fatal("ошибка загрузки формы:", err)
